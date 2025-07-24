@@ -7,23 +7,44 @@
 
 import SwiftUI
 
+enum CurrentLight {
+    case red, yellow, green, off
+}
+
 struct ContentView: View {
     
     @State private var buttonName = "Start"
+    
+    @State private var currentLight = CurrentLight.off
+    
+    
     var body: some View {
+        
+        
         ZStack {
             Color(.black)
                 .ignoresSafeArea()
             VStack {
-                ColorCircle(color: .red)
+                ColorLight(color: .red, opacity: currentLight == .red ? 1 : 0.3)
+                ColorLight(color: .yellow, opacity: currentLight == .yellow ? 1 : 0.3)
+                ColorLight(color: .green, opacity: currentLight == .green ? 1 : 0.3)
                 
-                
-                ColorCircle(color: .yellow)
-                
-                ColorCircle(color: .green)
                 Spacer()
                 
-                Button(action: { buttonName = "Next"}) {
+                Button {
+                    buttonName = "Next"
+                    
+                    switch currentLight {
+                    case .red:
+                        currentLight = .yellow
+                    case .yellow:
+                        currentLight = .green
+                    case .green:
+                        currentLight = .red
+                    case .off:
+                        currentLight = .red
+                    }
+                } label: {
                     Text(buttonName)
                         .font(.title)
                 }
@@ -32,23 +53,18 @@ struct ContentView: View {
         }
     }
     
-//    private func  nextLight: {
-//        
-//    }
+    
 }
 
-struct ColorCircle: View {
-    var color: Color
-    var body: some View {
-        Circle()
-            .fill(color)
-            .frame(width: 100, height: 100)
-            .opacity(0.5)
-    }
-}
+
+
+
 
 
 
 #Preview {
     ContentView()
 }
+
+
+
