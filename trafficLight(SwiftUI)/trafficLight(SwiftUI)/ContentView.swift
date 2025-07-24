@@ -31,30 +31,29 @@ struct ContentView: View {
                 
                 Spacer()
                 
-                Button {
-                    buttonName = "Next"
-                    
-                    switch currentLight {
-                    case .red:
-                        currentLight = .yellow
-                    case .yellow:
-                        currentLight = .green
-                    case .green:
-                        currentLight = .red
-                    case .off:
-                        currentLight = .red
+                ChangeColorButton(
+                    title: "Next",
+                    action: {
+                        switch currentLight {
+                        case .red:
+                            currentLight = .yellow
+                        case .yellow:
+                            currentLight = .green
+                        case .green:
+                            currentLight = .red
+                        case .off:
+                            currentLight = .red
+                        }
                     }
-                } label: {
-                    Text(buttonName)
-                        .font(.title)
-                }
+                )
             }
             .padding()
         }
     }
-    
-    
 }
+
+
+
 
 
 
